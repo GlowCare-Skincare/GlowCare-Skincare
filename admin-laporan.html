@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan - GlowCare Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #11998e 0%, #0d7a71 100%);
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <aside class="w-64 sidebar-gradient text-white fixed h-full hidden md:block">
+            <div class="p-6 border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-spa text-3xl"></i>
+                    <h1 class="font-bold text-xl">GlowCare</h1>
+                </div>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="admin-dashboard.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="admin-produk.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-box"></i><span>Produk</span></a>
+                <a href="admin-pesanan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-shopping-cart"></i><span>Pesanan</span></a>
+                <a href="admin-pelanggan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-users"></i><span>Pelanggan</span></a>
+                <a href="admin-laporan.html" class="menu-item active flex items-center space-x-3 p-3 rounded-xl"><i
+                        class="fas fa-chart-bar"></i><span>Laporan</span></a>
+                <a href="admin-pengaturan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-cog"></i><span>Pengaturan</span></a>
+            </nav>
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+                <button onclick="logout()" class="w-full p-3 bg-white/10 hover:bg-white/20 rounded-xl"><i
+                        class="fas fa-sign-out-alt mr-2"></i>Keluar</button>
+            </div>
+        </aside>
+        <main class="flex-1 md:ml-64 p-6">
+            <h2 class="text-2xl font-bold mb-6">📊 Laporan Penjualan</h2>
+            <div class="grid md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <p class="text-sm text-gray-500">Pendapatan</p>
+                    <p class="text-2xl font-bold text-emerald-600">Rp 25.8 Jt</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <p class="text-sm text-gray-500">Pesanan</p>
+                    <p class="text-2xl font-bold text-blue-600">156</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <p class="text-sm text-gray-500">Rata-rata</p>
+                    <p class="text-2xl font-bold text-purple-600">Rp 165K</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm">
+                    <p class="text-sm text-gray-500">Pelanggan</p>
+                    <p class="text-2xl font-bold text-pink-600">89</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="font-bold mb-4">Produk Terlaris</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center"><span>💧 Tropical Cleanser</span><span
+                            class="text-emerald-600">89 terjual</span></div>
+                    <div class="flex justify-between items-center"><span>🌺 Hibiscus Serum</span><span
+                            class="text-emerald-600">67 terjual</span></div>
+                    <div class="flex justify-between items-center"><span>☀️ Mango Sunscreen</span><span
+                            class="text-emerald-600">54 terjual</span></div>
+                    <div class="flex justify-between items-center"><span>🌙 Night Cream</span><span
+                            class="text-emerald-600">43 terjual</span></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        if (!localStorage.getItem('glowcare_admin_session') && !sessionStorage.getItem('glowcare_admin_session')) window.location.href = 'admin-login.html';
+        function logout() { localStorage.removeItem('glowcare_admin_session'); sessionStorage.removeItem('glowcare_admin_session'); window.location.href = 'admin-login.html'; }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin - GlowCare Skincare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard Admin GlowCare Skincare">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #11998e 0%, #0d7a71 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .tropical-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0C30 16.5 16.5 30 0 30C16.5 30 30 43.5 30 60C30 43.5 43.5 30 60 30C43.5 30 30 16.5 30 0Z' fill='%2338ef7d' fill-opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .progress-bar {
+            transition: width 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.5s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 tropical-pattern">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 sidebar-gradient text-white fixed h-full hidden md:block">
+            <!-- Logo -->
+            <div class="p-6 border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-spa text-3xl"></i>
+                    <div>
+                        <h1 class="font-bold text-xl" style="font-family: 'Playfair Display', serif;">GlowCare</h1>
+                        <p class="text-xs text-white/70">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu -->
+            <nav class="p-4 space-y-2">
+                <a href="admin-dashboard.html" class="menu-item active flex items-center space-x-3 p-3 rounded-xl">
+                    <i class="fas fa-home text-lg"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-produk.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-box text-lg"></i>
+                    <span>Produk</span>
+                </a>
+                <a href="admin-pesanan.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span>Pesanan</span>
+                </a>
+                <a href="admin-pelanggan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-users text-lg"></i>
+                    <span>Pelanggan</span>
+                </a>
+                <a href="admin-keuangan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-wallet text-lg"></i>
+                    <span>Keuangan</span>
+                </a>
+                <a href="admin-laporan.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-chart-bar text-lg"></i>
+                    <span>Laporan</span>
+                </a>
+                <a href="admin-pengaturan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-cog text-lg"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </nav>
+
+            <!-- Logout -->
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+                <button id="logoutBtn"
+                    class="w-full flex items-center justify-center space-x-2 p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Keluar</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-64">
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm sticky top-0 z-40">
+                <div class="flex items-center justify-between p-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobileMenuToggle" class="md:hidden p-2 text-gray-600 hover:text-gray-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+
+                    <div class="flex-1 max-w-xl mx-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Cari produk, pesanan, pelanggan..."
+                                class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <i
+                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-600 hover:text-gray-800">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span
+                                class="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        </button>
+
+                        <!-- Profile -->
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div class="hidden sm:block">
+                                <p id="adminName" class="font-medium text-gray-800">Admin</p>
+                                <p class="text-xs text-gray-500">Administrator</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="p-6">
+                <!-- Welcome Section -->
+                <div class="mb-8 animate-fade-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Selamat Datang! 👋</h2>
+                    <p class="text-gray-600">Berikut ringkasan aktivitas GlowCare hari ini</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card p-6 rounded-2xl card-hover animate-fade-in" style="animation-delay: 0.1s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-shopping-bag text-emerald-500 text-xl"></i>
+                            </div>
+                            <span class="text-emerald-500 text-sm font-medium">+12%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">156</h3>
+                        <p class="text-gray-500 text-sm">Total Pesanan</p>
+                    </div>
+
+                    <div class="stat-card p-6 rounded-2xl card-hover animate-fade-in" style="animation-delay: 0.2s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-coins text-pink-500 text-xl"></i>
+                            </div>
+                            <span class="text-emerald-500 text-sm font-medium">+8%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">Rp 25.8 Jt</h3>
+                        <p class="text-gray-500 text-sm">Pendapatan</p>
+                    </div>
+
+                    <div class="stat-card p-6 rounded-2xl card-hover animate-fade-in" style="animation-delay: 0.3s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-users text-blue-500 text-xl"></i>
+                            </div>
+                            <span class="text-emerald-500 text-sm font-medium">+24%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">1,248</h3>
+                        <p class="text-gray-500 text-sm">Total Pelanggan</p>
+                    </div>
+
+                    <div class="stat-card p-6 rounded-2xl card-hover animate-fade-in" style="animation-delay: 0.4s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-box text-yellow-500 text-xl"></i>
+                            </div>
+                            <span class="text-red-500 text-sm font-medium">-3%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800">45</h3>
+                    </div>
+                </div>
+
+                <!-- Analisis Omset Section -->
+                <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Chart Pertumbuhan Omset -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6 animate-fade-in"
+                        style="animation-delay: 0.45s;">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">📈 Pertumbuhan Omset</h3>
+                                <p class="text-sm text-gray-500">Analisis pertumbuhan omset 6 bulan terakhir</p>
+                            </div>
+                            <select id="chartPeriod"
+                                class="px-4 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option value="6months">6 Bulan Terakhir</option>
+                                <option value="12months">12 Bulan Terakhir</option>
+                                <option value="year">Tahun Ini</option>
+                            </select>
+                        </div>
+
+                        <!-- Chart Container -->
+                        <div class="relative h-64">
+                            <canvas id="omsetChart"></canvas>
+                        </div>
+
+                        <!-- Chart Legend -->
+                        <div class="flex items-center justify-center gap-6 mt-4 text-sm">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                <span class="text-gray-600">Omset</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-pink-400"></div>
+                                <span class="text-gray-600">Target</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Omset Card -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 animate-fade-in" style="animation-delay: 0.5s;">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">💰 Total Omset</h3>
+
+                        <!-- Total Omset Besar -->
+                        <div class="text-center mb-6 p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl">
+                            <p class="text-sm text-gray-500 mb-1">Total Omset Tahun Ini</p>
+                            <h2 class="text-3xl font-bold text-emerald-600">Rp 156.8 Jt</h2>
+                            <div class="flex items-center justify-center gap-1 mt-2">
+                                <i class="fas fa-arrow-up text-emerald-500 text-sm"></i>
+                                <span class="text-emerald-500 text-sm font-medium">+18.5% dari tahun lalu</span>
+                            </div>
+                        </div>
+
+                        <!-- Breakdown Omset -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-calendar-day text-blue-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Hari Ini</p>
+                                        <p class="font-bold text-gray-800">Rp 1.2 Jt</p>
+                                    </div>
+                                </div>
+                                <span class="text-emerald-500 text-sm font-medium">+5%</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-calendar-week text-purple-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Minggu Ini</p>
+                                        <p class="font-bold text-gray-800">Rp 8.5 Jt</p>
+                                    </div>
+                                </div>
+                                <span class="text-emerald-500 text-sm font-medium">+12%</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-calendar-alt text-pink-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Bulan Ini</p>
+                                        <p class="font-bold text-gray-800">Rp 25.8 Jt</p>
+                                    </div>
+                                </div>
+                                <span class="text-emerald-500 text-sm font-medium">+8%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Omset Detail Cards -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <!-- Omset Bulan Lalu vs Bulan Ini -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 animate-fade-in" style="animation-delay: 0.55s;">
+                        <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-exchange-alt text-emerald-500"></i>
+                            Perbandingan Bulan
+                        </h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-500">Bulan Lalu</span>
+                                    <span class="font-medium">Rp 23.9 Jt</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-gray-400 h-3 rounded-full progress-bar" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-500">Bulan Ini</span>
+                                    <span class="font-medium text-emerald-600">Rp 25.8 Jt</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-emerald-500 h-3 rounded-full progress-bar" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="pt-2 border-t border-gray-100">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">Pertumbuhan</span>
+                                    <span class="text-emerald-500 font-bold">+7.9%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Target Omset -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 animate-fade-in" style="animation-delay: 0.6s;">
+                        <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-bullseye text-pink-500"></i>
+                            Target Omset Bulan Ini
+                        </h4>
+                        <div class="text-center mb-4">
+                            <div class="relative inline-block">
+                                <svg class="w-32 h-32 transform -rotate-90">
+                                    <circle cx="64" cy="64" r="56" stroke="#e5e7eb" stroke-width="12" fill="none" />
+                                    <circle id="targetProgress" cx="64" cy="64" r="56" stroke="#10b981"
+                                        stroke-width="12" fill="none" stroke-dasharray="352" stroke-dashoffset="70.4"
+                                        stroke-linecap="round" />
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <span class="text-2xl font-bold text-gray-800">80%</span>
+                                        <p class="text-xs text-gray-500">Tercapai</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center text-sm text-gray-600">
+                            <p><span class="font-bold text-emerald-600">Rp 25.8 Jt</span> dari target <span
+                                    class="font-bold">Rp 32 Jt</span></p>
+                            <p class="mt-1 text-gray-500">Sisa: Rp 6.2 Jt untuk mencapai target</p>
+                        </div>
+                    </div>
+
+                    <!-- Top Earning Products -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 animate-fade-in" style="animation-delay: 0.65s;">
+                        <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-trophy text-yellow-500"></i>
+                            Produk Omset Tertinggi
+                        </h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="w-6 h-6 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800 text-sm">Full Set Bundle</p>
+                                    <p class="text-xs text-gray-500">32 terjual</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold text-sm">Rp 11.2 Jt</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="w-6 h-6 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800 text-sm">Hibiscus Serum</p>
+                                    <p class="text-xs text-gray-500">67 terjual</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold text-sm">Rp 9.9 Jt</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="w-6 h-6 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                                <div class="flex-1">
+                                    <p class="font-medium text-gray-800 text-sm">Tropical Cleanser</p>
+                                    <p class="text-xs text-gray-500">89 terjual</p>
+                                </div>
+                                <span class="text-emerald-600 font-bold text-sm">Rp 7.9 Jt</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Recent Orders -->
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6 animate-fade-in"
+                        style="animation-delay: 0.5s;">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-gray-800">Pesanan Terbaru</h3>
+                            <a href="admin-pesanan.html"
+                                class="text-emerald-500 hover:text-emerald-600 text-sm font-medium">Lihat Semua</a>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-gray-500 text-sm">
+                                        <th class="pb-4">ID Pesanan</th>
+                                        <th class="pb-4">Pelanggan</th>
+                                        <th class="pb-4">Produk</th>
+                                        <th class="pb-4">Total</th>
+                                        <th class="pb-4">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    <tr class="border-t border-gray-100">
+                                        <td class="py-4 font-medium">#GC2401</td>
+                                        <td class="py-4">Sari Dewi</td>
+                                        <td class="py-4">Skintific Cleanser</td>
+                                        <td class="py-4">Rp 80.000</td>
+                                        <td class="py-4">
+                                            <span
+                                                class="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-xs font-medium">Selesai</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="py-4 font-medium">#GC2402</td>
+                                        <td class="py-4">Anisa Putri</td>
+                                        <td class="py-4">Wardah Serum</td>
+                                        <td class="py-4">Rp 65.000</td>
+                                        <td class="py-4">
+                                            <span
+                                                class="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-medium">Proses</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="py-4 font-medium">#GC2403</td>
+                                        <td class="py-4">Rina Amelia</td>
+                                        <td class="py-4">Gloow & Be Sunscreen</td>
+                                        <td class="py-4">Rp 50.000</td>
+                                        <td class="py-4">
+                                            <span
+                                                class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium">Dikirim</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="py-4 font-medium">#GC2404</td>
+                                        <td class="py-4">Maya Sandra</td>
+                                        <td class="py-4">Full Set Bundle</td>
+                                        <td class="py-4">Rp 350.000</td>
+                                        <td class="py-4">
+                                            <span
+                                                class="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-xs font-medium">Pending</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Top Products -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 animate-fade-in" style="animation-delay: 0.6s;">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-gray-800">Produk Terlaris</h3>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-2xl">
+                                    💧</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Skintific Cleanser</h4>
+                                    <p class="text-sm text-gray-500">89 terjual</p>
+                                </div>
+                                <span class="text-emerald-500 font-medium">Rp 80K</span>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center text-2xl">
+                                    🌺</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Wardah Serum</h4>
+                                    <p class="text-sm text-gray-500">67 terjual</p>
+                                </div>
+                                <span class="text-emerald-500 font-medium">Rp 65K</span>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-2xl">
+                                    ☀️</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Gloow & Be Sunscreen</h4>
+                                    <p class="text-sm text-gray-500">54 terjual</p>
+                                </div>
+                                <span class="text-emerald-500 font-medium">Rp 50K</span>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl">
+                                    🧴</div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Scarlett Cream</h4>
+                                    <p class="text-sm text-gray-500">43 terjual</p>
+                                </div>
+                                <span class="text-emerald-500 font-medium">Rp 87K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="mt-8 grid md:grid-cols-4 gap-4 animate-fade-in" style="animation-delay: 0.7s;">
+                    <a href="admin-produk.html"
+                        class="flex items-center justify-center space-x-3 p-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl transition-colors">
+                        <i class="fas fa-plus"></i>
+                        <span>Tambah Produk</span>
+                    </a>
+                    <a href="admin-pesanan.html"
+                        class="flex items-center justify-center space-x-3 p-4 bg-pink-500 hover:bg-pink-600 text-white rounded-xl transition-colors">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Kelola Pesanan</span>
+                    </a>
+                    <a href="admin-laporan.html"
+                        class="flex items-center justify-center space-x-3 p-4 bg-blue-500 hover:bg-blue-600 text-white rounded-xl transition-colors">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Lihat Laporan</span>
+                    </a>
+                    <a href="admin-pengaturan.html"
+                        class="flex items-center justify-center space-x-3 p-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl transition-colors">
+                        <i class="fas fa-cog"></i>
+                        <span>Pengaturan</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/50 z-50 hidden md:hidden">
+        <aside class="w-64 sidebar-gradient text-white h-full">
+            <!-- Close Button -->
+            <div class="p-4 flex justify-end">
+                <button id="closeMobileMenu" class="p-2 text-white/80 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Logo -->
+            <div class="px-6 pb-6 border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-spa text-3xl"></i>
+                    <div>
+                        <h1 class="font-bold text-xl" style="font-family: 'Playfair Display', serif;">GlowCare</h1>
+                        <p class="text-xs text-white/70">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu -->
+            <nav class="p-4 space-y-2">
+                <a href="admin-dashboard.html" class="menu-item active flex items-center space-x-3 p-3 rounded-xl">
+                    <i class="fas fa-home text-lg"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-produk.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-box text-lg"></i>
+                    <span>Produk</span>
+                </a>
+                <a href="admin-pesanan.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span>Pesanan</span>
+                </a>
+                <a href="admin-pelanggan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-users text-lg"></i>
+                    <span>Pelanggan</span>
+                </a>
+                <a href="admin-keuangan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-wallet text-lg"></i>
+                    <span>Keuangan</span>
+                </a>
+                <a href="admin-laporan.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-chart-bar text-lg"></i>
+                    <span>Laporan</span>
+                </a>
+                <a href="admin-pengaturan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-cog text-lg"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </nav>
+
+            <!-- Logout -->
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+                <button id="logoutBtnMobile"
+                    class="w-full flex items-center justify-center space-x-2 p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Keluar</span>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Check authentication
+        window.addEventListener('load', function () {
+            const session = localStorage.getItem('glowcare_admin_session') || sessionStorage.getItem('glowcare_admin_session');
+
+            if (!session) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            // Set admin name
+            const adminData = JSON.parse(session);
+            document.getElementById('adminName').textContent = adminData.name || 'Admin';
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('glowcare_admin_session');
+            sessionStorage.removeItem('glowcare_admin_session');
+            window.location.href = 'admin-login.html';
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('logoutBtnMobile').addEventListener('click', logout);
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+        mobileMenuToggle.addEventListener('click', function () {
+            mobileMenuOverlay.classList.remove('hidden');
+        });
+
+        closeMobileMenu.addEventListener('click', function () {
+            mobileMenuOverlay.classList.add('hidden');
+        });
+
+        mobileMenuOverlay.addEventListener('click', function (e) {
+            if (e.target === mobileMenuOverlay) {
+                mobileMenuOverlay.classList.add('hidden');
+            }
+        });
+
+        // Omset Chart
+        const ctx = document.getElementById('omsetChart').getContext('2d');
+
+        const chartData = {
+            '6months': {
+                labels: ['Ags', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'],
+                omset: [18.5, 21.2, 19.8, 22.5, 23.9, 25.8],
+                target: [20, 22, 22, 24, 26, 28]
+            },
+            '12months': {
+                labels: ['Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des', 'Jan'],
+                omset: [12.5, 14.2, 15.8, 16.5, 17.2, 18.0, 18.5, 21.2, 19.8, 22.5, 23.9, 25.8],
+                target: [14, 16, 17, 18, 19, 20, 20, 22, 22, 24, 26, 28]
+            },
+            'year': {
+                labels: ['Jan'],
+                omset: [25.8],
+                target: [28]
+            }
+        };
+
+        let omsetChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData['6months'].labels,
+                datasets: [
+                    {
+                        label: 'Omset (Juta Rp)',
+                        data: chartData['6months'].omset,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#10b981',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Target (Juta Rp)',
+                        data: chartData['6months'].target,
+                        borderColor: '#f472b6',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.4,
+                        pointBackgroundColor: '#f472b6',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1f2937',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function (context) {
+                                return context.dataset.label + ': Rp ' + context.parsed.y + ' Jt';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            callback: function (value) {
+                                return 'Rp ' + value + ' Jt';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart period change
+        document.getElementById('chartPeriod').addEventListener('change', function () {
+            const period = this.value;
+            omsetChart.data.labels = chartData[period].labels;
+            omsetChart.data.datasets[0].data = chartData[period].omset;
+            omsetChart.data.datasets[1].data = chartData[period].target;
+            omsetChart.update();
+        });
+    </script>
+
+</body>
+
+</html>

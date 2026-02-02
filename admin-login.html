@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - GlowCare Skincare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login Admin GlowCare Skincare">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #ffecd2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.3);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #0d7a71 0%, #2dcc69 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+        }
+
+        .tropical-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .success-animation {
+            animation: successPop 0.5s ease-out;
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+
+    <!-- Animated background elements -->
+    <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-24 h-24 tropical-blob bg-emerald-400 opacity-30 floating"></div>
+        <div class="absolute top-40 right-20 w-32 h-32 tropical-blob bg-pink-300 opacity-30 floating"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-20 left-1/4 w-20 h-20 tropical-blob bg-yellow-300 opacity-30 floating"
+            style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-40 right-1/3 w-16 h-16 tropical-blob bg-teal-300 opacity-30 floating"
+            style="animation-delay: 3s;"></div>
+        <!-- Decorative leaves -->
+        <div class="absolute top-32 right-10 text-6xl opacity-20">🌿</div>
+        <div class="absolute bottom-32 left-10 text-5xl opacity-20">🌺</div>
+        <div class="absolute top-1/2 right-1/4 text-4xl opacity-15">🍃</div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="w-full max-w-md px-6 relative z-10">
+        <!-- Back to Home -->
+        <a href="index.html"
+            class="inline-flex items-center text-gray-700 hover:text-emerald-600 mb-6 transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Kembali ke Beranda
+        </a>
+
+        <div class="glass-card rounded-3xl shadow-2xl p-8">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="mb-4">
+                    <span class="text-5xl">🔐</span>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Admin Login</h1>
+                <p class="text-gray-600">Masuk ke panel admin GlowCare</p>
+            </div>
+
+            <!-- Alert Message -->
+            <div id="alertMessage" class="hidden mb-6 p-4 rounded-xl text-center"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-6">
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-2">
+                        <i class="fas fa-envelope text-emerald-500 mr-2"></i>Email Admin
+                    </label>
+                    <input type="email" id="email" name="email" required
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none input-focus transition-all"
+                        placeholder="admin@glowcare.id">
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-gray-700 font-medium mb-2">
+                        <i class="fas fa-lock text-emerald-500 mr-2"></i>Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" required
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none input-focus transition-all pr-12"
+                            placeholder="Masukkan password">
+                        <button type="button" id="togglePassword"
+                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" id="rememberMe"
+                            class="w-4 h-4 text-emerald-500 border-gray-300 rounded focus:ring-emerald-500">
+                        <span class="ml-2 text-gray-600 text-sm">Ingat saya</span>
+                    </label>
+                    <a href="#" class="text-emerald-600 hover:text-emerald-700 text-sm font-medium">
+                        Lupa Password?
+                    </a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn"
+                    class="w-full btn-gradient text-white py-4 rounded-xl font-semibold text-lg transition-all duration-300 flex items-center justify-center">
+                    <span id="btnText">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Masuk
+                    </span>
+                    <span id="btnLoading" class="hidden">
+                        <div class="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </span>
+                </button>
+            </form>
+
+            <!-- Register Link -->
+            <div class="text-center mt-6 pt-6 border-t border-gray-100">
+                <p class="text-gray-600">
+                    Belum punya akun admin?
+                    <a href="admin-register.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">
+                        Daftar disini
+                    </a>
+                </p>
+            </div>
+
+            <!-- Admin Info -->
+            <div class="mt-6 p-4 bg-emerald-50 rounded-xl">
+                <p class="text-sm text-emerald-700 text-center">
+                    <i class="fas fa-shield-alt mr-2"></i>
+                    Area khusus admin GlowCare Skincare
+                </p>
+            </div>
+        </div>
+
+        <!-- Demo Credentials -->
+        <div class="mt-6 glass-card rounded-xl p-4 text-center">
+            <p class="text-sm text-gray-600">
+                <i class="fas fa-info-circle text-emerald-500 mr-2"></i>
+                <strong>Username:</strong> GLOWCARE SKINCARE<br>
+                <strong>Password:</strong> GLOWCARE SKINCARE
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+        const alertMessage = document.getElementById('alertMessage');
+
+        // Demo admin credentials (untuk demo saja, dalam produksi gunakan backend)
+        const demoAdmin = {
+            email: 'GLOWCARE SKINCARE',
+            password: 'GLOWCARE SKINCARE'
+        };
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Show loading state
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Check credentials (demo)
+                // Dalam produksi, ini harus divalidasi di backend
+                const storedAdmins = JSON.parse(localStorage.getItem('glowcare_admins') || '[]');
+                const foundAdmin = storedAdmins.find(admin => admin.email === email && admin.password === password);
+
+                if ((email === demoAdmin.email && password === demoAdmin.password) || foundAdmin) {
+                    // Login successful
+                    showAlert('Login berhasil! Mengalihkan ke dashboard...', 'success');
+
+                    // Store login session
+                    const adminData = foundAdmin || { email: demoAdmin.email, name: 'Admin Demo' };
+                    if (rememberMe) {
+                        localStorage.setItem('glowcare_admin_session', JSON.stringify(adminData));
+                    } else {
+                        sessionStorage.setItem('glowcare_admin_session', JSON.stringify(adminData));
+                    }
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 1500);
+                } else {
+                    // Login failed
+                    showAlert('Email atau password salah!', 'error');
+                    loginForm.classList.add('shake');
+                    setTimeout(() => {
+                        loginForm.classList.remove('shake');
+                    }, 500);
+                }
+
+                // Reset button state
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        function showAlert(message, type) {
+            alertMessage.textContent = message;
+            alertMessage.classList.remove('hidden');
+            alertMessage.classList.add('success-animation');
+
+            if (type === 'success') {
+                alertMessage.className = 'mb-6 p-4 rounded-xl text-center bg-emerald-100 text-emerald-700 border border-emerald-200 success-animation';
+            } else {
+                alertMessage.className = 'mb-6 p-4 rounded-xl text-center bg-red-100 text-red-700 border border-red-200 success-animation';
+            }
+        }
+
+        // Check if already logged in
+        window.addEventListener('load', function () {
+            const session = localStorage.getItem('glowcare_admin_session') || sessionStorage.getItem('glowcare_admin_session');
+            if (session) {
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

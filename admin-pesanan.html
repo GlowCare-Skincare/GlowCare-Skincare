@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kelola Pesanan - GlowCare Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #11998e 0%, #0d7a71 100%);
+        }
+
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 sidebar-gradient text-white fixed h-full hidden md:block">
+            <div class="p-6 border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-spa text-3xl"></i>
+                    <div>
+                        <h1 class="font-bold text-xl">GlowCare</h1>
+                        <p class="text-xs text-white/70">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="admin-dashboard.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-home text-lg"></i><span>Dashboard</span>
+                </a>
+                <a href="admin-produk.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-box text-lg"></i><span>Produk</span>
+                </a>
+                <a href="admin-pesanan.html" class="menu-item active flex items-center space-x-3 p-3 rounded-xl">
+                    <i class="fas fa-shopping-cart text-lg"></i><span>Pesanan</span>
+                </a>
+                <a href="admin-pelanggan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-users text-lg"></i><span>Pelanggan</span>
+                </a>
+                <a href="admin-laporan.html" class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-chart-bar text-lg"></i><span>Laporan</span>
+                </a>
+                <a href="admin-pengaturan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80">
+                    <i class="fas fa-cog text-lg"></i><span>Pengaturan</span>
+                </a>
+            </nav>
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+                <button onclick="logout()"
+                    class="w-full flex items-center justify-center space-x-2 p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
+                    <i class="fas fa-sign-out-alt"></i><span>Keluar</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-64 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Kelola Pesanan</h2>
+                    <p class="text-gray-600">Lihat dan kelola pesanan pelanggan</p>
+                </div>
+                <div class="flex space-x-2">
+                    <select id="statusFilter" onchange="filterOrders()"
+                        class="px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="all">Semua Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="proses">Proses</option>
+                        <option value="dikirim">Dikirim</option>
+                        <option value="selesai">Selesai</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ID Pesanan</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Pelanggan</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Produk</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Total</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Status</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTable">
+                        <!-- Orders will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        if (!localStorage.getItem('glowcare_admin_session') && !sessionStorage.getItem('glowcare_admin_session')) {
+            window.location.href = 'admin-login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('glowcare_admin_session');
+            sessionStorage.removeItem('glowcare_admin_session');
+            window.location.href = 'admin-login.html';
+        }
+
+        const defaultOrders = [
+            { id: 'GC2401', customer: 'Sari Dewi', product: 'Tropical Cleanser', total: 89000, status: 'selesai', date: '2026-01-30' },
+            { id: 'GC2402', customer: 'Anisa Putri', product: 'Hibiscus Serum', total: 149000, status: 'proses', date: '2026-01-30' },
+            { id: 'GC2403', customer: 'Rina Amelia', product: 'Mango Sunscreen', total: 125000, status: 'dikirim', date: '2026-01-29' },
+            { id: 'GC2404', customer: 'Maya Sandra', product: 'Full Set Bundle', total: 350000, status: 'pending', date: '2026-01-29' },
+            { id: 'GC2405', customer: 'Dina Kartika', product: 'Night Cream', total: 175000, status: 'selesai', date: '2026-01-28' },
+            { id: 'GC2406', customer: 'Lina Susanti', product: 'Rose Toner', total: 95000, status: 'proses', date: '2026-01-28' }
+        ];
+
+        function getStatusBadge(status) {
+            const styles = {
+                pending: 'bg-pink-100 text-pink-600',
+                proses: 'bg-yellow-100 text-yellow-600',
+                dikirim: 'bg-blue-100 text-blue-600',
+                selesai: 'bg-emerald-100 text-emerald-600'
+            };
+            return `<span class="px-3 py-1 rounded-full text-xs font-medium ${styles[status]}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+        }
+
+        function loadOrders(filter = 'all') {
+            let orders = JSON.parse(localStorage.getItem('glowcare_orders') || 'null');
+            if (!orders) {
+                orders = defaultOrders;
+                localStorage.setItem('glowcare_orders', JSON.stringify(orders));
+            }
+
+            if (filter !== 'all') {
+                orders = orders.filter(o => o.status === filter);
+            }
+
+            const table = document.getElementById('ordersTable');
+            table.innerHTML = orders.map(o => `
+                <tr class="border-t border-gray-100 hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">#${o.id}</td>
+                    <td class="px-6 py-4">${o.customer}</td>
+                    <td class="px-6 py-4">${o.product}</td>
+                    <td class="px-6 py-4">Rp ${o.total.toLocaleString()}</td>
+                    <td class="px-6 py-4">${getStatusBadge(o.status)}</td>
+                    <td class="px-6 py-4">
+                        <select onchange="updateStatus('${o.id}', this.value)" class="px-2 py-1 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="proses" ${o.status === 'proses' ? 'selected' : ''}>Proses</option>
+                            <option value="dikirim" ${o.status === 'dikirim' ? 'selected' : ''}>Dikirim</option>
+                            <option value="selesai" ${o.status === 'selesai' ? 'selected' : ''}>Selesai</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterOrders() {
+            const filter = document.getElementById('statusFilter').value;
+            loadOrders(filter);
+        }
+
+        function updateStatus(orderId, newStatus) {
+            let orders = JSON.parse(localStorage.getItem('glowcare_orders'));
+            const index = orders.findIndex(o => o.id === orderId);
+            if (index !== -1) {
+                orders[index].status = newStatus;
+                localStorage.setItem('glowcare_orders', JSON.stringify(orders));
+                loadOrders(document.getElementById('statusFilter').value);
+            }
+        }
+
+        loadOrders();
+    </script>
+</body>
+
+</html>

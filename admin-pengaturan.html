@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pengaturan - GlowCare Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #11998e 0%, #0d7a71 100%);
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="flex min-h-screen">
+        <aside class="w-64 sidebar-gradient text-white fixed h-full hidden md:block">
+            <div class="p-6 border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-spa text-3xl"></i>
+                    <h1 class="font-bold text-xl">GlowCare</h1>
+                </div>
+            </div>
+            <nav class="p-4 space-y-2">
+                <a href="admin-dashboard.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="admin-produk.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-box"></i><span>Produk</span></a>
+                <a href="admin-pesanan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-shopping-cart"></i><span>Pesanan</span></a>
+                <a href="admin-pelanggan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-users"></i><span>Pelanggan</span></a>
+                <a href="admin-laporan.html"
+                    class="menu-item flex items-center space-x-3 p-3 rounded-xl text-white/80"><i
+                        class="fas fa-chart-bar"></i><span>Laporan</span></a>
+                <a href="admin-pengaturan.html" class="menu-item active flex items-center space-x-3 p-3 rounded-xl"><i
+                        class="fas fa-cog"></i><span>Pengaturan</span></a>
+            </nav>
+            <div class="absolute bottom-0 left-0 right-0 p-4">
+                <button onclick="logout()" class="w-full p-3 bg-white/10 hover:bg-white/20 rounded-xl"><i
+                        class="fas fa-sign-out-alt mr-2"></i>Keluar</button>
+            </div>
+        </aside>
+        <main class="flex-1 md:ml-64 p-6">
+            <h2 class="text-2xl font-bold mb-6">⚙️ Pengaturan</h2>
+            <div id="alert" class="hidden mb-4 p-4 rounded-xl"></div>
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold mb-4"><i class="fas fa-user text-emerald-500 mr-2"></i>Profil Admin</h3>
+                    <form id="profileForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Nama</label>
+                            <input type="text" id="adminName" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Email</label>
+                            <input type="email" id="adminEmail" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <button type="submit"
+                            class="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600">Simpan
+                            Profil</button>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="font-bold mb-4"><i class="fas fa-lock text-emerald-500 mr-2"></i>Ubah Password</h3>
+                    <form id="passwordForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Password Lama</label>
+                            <input type="password" id="oldPassword" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Password Baru</label>
+                            <input type="password" id="newPassword" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Ubah
+                            Password</button>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm lg:col-span-2">
+                    <h3 class="font-bold mb-4"><i class="fas fa-store text-emerald-500 mr-2"></i>Informasi Toko</h3>
+                    <form id="storeForm" class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Nama Toko</label>
+                            <input type="text" id="storeName" value="GlowCare Skincare"
+                                class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Telepon</label>
+                            <input type="tel" id="storePhone" value="+62 831-94856402"
+                                class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium mb-1">Alamat</label>
+                            <input type="text" id="storeAddress" value="Jl. Tropical Beauty No. 88, Jakarta"
+                                class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <button type="submit"
+                            class="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        const session = localStorage.getItem('glowcare_admin_session') || sessionStorage.getItem('glowcare_admin_session');
+        if (!session) window.location.href = 'admin-login.html';
+        const admin = JSON.parse(session);
+        document.getElementById('adminName').value = admin.name || '';
+        document.getElementById('adminEmail').value = admin.email || '';
+
+        function showAlert(msg, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = msg;
+            alert.className = 'mb-4 p-4 rounded-xl ' + (type === 'success' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700');
+            alert.classList.remove('hidden');
+            setTimeout(() => alert.classList.add('hidden'), 3000);
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', e => {
+            e.preventDefault();
+            admin.name = document.getElementById('adminName').value;
+            admin.email = document.getElementById('adminEmail').value;
+            localStorage.setItem('glowcare_admin_session', JSON.stringify(admin));
+            showAlert('Profil berhasil disimpan!', 'success');
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', e => {
+            e.preventDefault();
+            showAlert('Password berhasil diubah!', 'success');
+        });
+
+        document.getElementById('storeForm').addEventListener('submit', e => {
+            e.preventDefault();
+            showAlert('Informasi toko berhasil disimpan!', 'success');
+        });
+
+        function logout() { localStorage.removeItem('glowcare_admin_session'); sessionStorage.removeItem('glowcare_admin_session'); window.location.href = 'admin-login.html'; }
+    </script>
+</body>
+
+</html>

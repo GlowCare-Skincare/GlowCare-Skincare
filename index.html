@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GlowCare Skincare - Skincare Khusus Wanita</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="GlowCare Skincare - Produk skincare berkualitas khusus untuk wanita dengan bahan-bahan alami tropical">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Animate on Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Tropical gradient bg */
+        .gradient-bg {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #ffecd2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .tropical-gradient {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(17, 153, 142, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(56, 239, 125, 0.8);
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Leaf decoration */
+        .leaf-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0C30 16.5 16.5 30 0 30C16.5 30 30 43.5 30 60C30 43.5 43.5 30 60 30C43.5 30 30 16.5 30 0Z' fill='%2338ef7d' fill-opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        /* Fresh mint accent */
+        .mint-accent {
+            color: #11998e;
+        }
+
+        .mint-bg {
+            background-color: #11998e;
+        }
+
+        /* Coral pink accent */
+        .coral-accent {
+            color: #ff7e5f;
+        }
+
+        .coral-bg {
+            background-color: #ff7e5f;
+        }
+
+        /* Loading animation */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #11998e;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Tropical decorative elements */
+        .tropical-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 50%, #ffecd2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-container {
+            text-align: center;
+        }
+
+        .loading-emoji {
+            font-size: 80px;
+            animation: bounce 1s ease infinite;
+            display: inline-block;
+        }
+
+        .loading-emoji:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-emoji:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-emoji:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #11998e;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots span {
+            animation: dots 1.4s infinite;
+            opacity: 0;
+        }
+
+        .loading-dots span:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dots {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .loading-subtext {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Cute floating elements */
+        .loading-float {
+            position: absolute;
+            animation: floatAround 3s ease-in-out infinite;
+            opacity: 0.6;
+            font-size: 30px;
+        }
+
+        .loading-float:nth-child(1) {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .loading-float:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .loading-float:nth-child(3) {
+            bottom: 25%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+
+        .loading-float:nth-child(4) {
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 1.5s;
+        }
+
+        .loading-float:nth-child(5) {
+            top: 40%;
+            left: 5%;
+            animation-delay: 0.7s;
+        }
+
+        .loading-float:nth-child(6) {
+            top: 45%;
+            right: 8%;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes floatAround {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(10px, -10px) rotate(5deg);
+            }
+
+            50% {
+                transform: translate(0, -20px) rotate(0deg);
+            }
+
+            75% {
+                transform: translate(-10px, -10px) rotate(-5deg);
+            }
+        }
+
+        /* Progress bar */
+        .loading-progress {
+            width: 200px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #11998e, #38ef7d);
+            border-radius: 10px;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+            }
+
+            50% {
+                width: 70%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.5);
+        }
+
+        .back-to-top i {
+            color: white;
+            font-size: 22px;
+            animation: bounceUp 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceUp {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .back-to-top::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            animation: pulse 2s ease-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 transition-colors duration-300">
+
+    <!-- Cute Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <!-- Floating decorative elements -->
+        <div class="loading-float">🌸</div>
+        <div class="loading-float">🌿</div>
+        <div class="loading-float">✨</div>
+        <div class="loading-float">🍃</div>
+        <div class="loading-float">💧</div>
+        <div class="loading-float">🌺</div>
+
+        <div class="loading-container">
+            <!-- Bouncing skincare emojis -->
+            <div>
+                <span class="loading-emoji">🧴</span>
+                <span class="loading-emoji">🌸</span>
+                <span class="loading-emoji">✨</span>
+            </div>
+
+            <p class="loading-text">
+                Mempersiapkan Kecantikanmu
+                <span class="loading-dots">
+                    <span>.</span><span>.</span><span>.</span>
+                </span>
+            </p>
+
+            <p class="loading-subtext">Sebentar ya, sedang menyiapkan produk terbaik! 💕</p>
+
+            <!-- Progress bar -->
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+        <nav class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-spa text-emerald-500 text-2xl"></i>
+                    <span class="font-bold text-xl" style="font-family: 'Playfair Display', serif;">GlowCare</span>
+                </div>
+
+                <div class="hidden md:flex space-x-6">
+                    <a href="#ringkasan" class="hover:text-emerald-500 transition-colors">Tentang</a>
+                    <a href="#profil" class="hover:text-emerald-500 transition-colors">Profil</a>
+                    <a href="#produk" class="hover:text-emerald-500 transition-colors">Produk</a>
+                    <a href="#pemasaran" class="hover:text-emerald-500 transition-colors">Layanan</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="pesan.html"
+                        class="hidden sm:block bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        <i class="fas fa-shopping-cart mr-1"></i>Pesan Sekarang
+                    </a>
+                    <a href="admin-login.html"
+                        class="hidden sm:block text-gray-600 hover:text-emerald-500 px-3 py-2 text-sm font-medium transition-colors">
+                        <i class="fas fa-user-shield mr-1"></i>Admin
+                    </a>
+                    <a href="#kontak"
+                        class="hidden sm:block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+                        Hubungi Kami
+                    </a>
+                    <button id="mobileMenuToggle" class="md:hidden p-2">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <a href="#ringkasan" class="block py-2 hover:text-emerald-500 transition-colors">Tentang</a>
+                <a href="#profil" class="block py-2 hover:text-emerald-500 transition-colors">Profil</a>
+                <a href="#produk" class="block py-2 hover:text-emerald-500 transition-colors">Produk</a>
+                <a href="#pemasaran" class="block py-2 hover:text-emerald-500 transition-colors">Layanan</a>
+                <a href="pesan.html" class="block py-2 text-pink-600 font-medium">
+                    <i class="fas fa-shopping-cart mr-1"></i>Pesan Sekarang
+                </a>
+                <a href="admin-login.html" class="block py-2 text-emerald-600 font-medium">
+                    <i class="fas fa-user-shield mr-1"></i>Admin Login
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="gradient-bg min-h-screen flex items-center relative overflow-hidden">
+        <!-- Animated background elements - Tropical theme -->
+        <div class="absolute inset-0">
+            <div class="absolute top-20 left-10 w-24 h-24 tropical-blob bg-emerald-400 opacity-30 floating"></div>
+            <div class="absolute top-40 right-20 w-32 h-32 tropical-blob bg-pink-300 opacity-30 floating"
+                style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-20 h-20 tropical-blob bg-yellow-300 opacity-30 floating"
+                style="animation-delay: 4s;"></div>
+            <div class="absolute bottom-40 right-1/3 w-16 h-16 tropical-blob bg-teal-300 opacity-30 floating"
+                style="animation-delay: 3s;"></div>
+            <!-- Decorative leaves -->
+            <div class="absolute top-32 right-10 text-6xl opacity-20">🌿</div>
+            <div class="absolute bottom-32 left-10 text-5xl opacity-20">🌺</div>
+            <div class="absolute top-1/2 right-1/4 text-4xl opacity-15">🍃</div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+            <div class="floating mb-6">
+                <span class="text-7xl">🌸</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 text-gray-800" data-aos="fade-down">
+                GlowCare Skincare
+            </h1>
+            <p class="text-xl md:text-2xl mb-2 text-gray-700" data-aos="fade-up">
+                ✨ Kecantikan Alami untuk Wanita Indonesia ✨
+            </p>
+            <p class="text-lg mb-8 text-gray-600" data-aos="fade-up" data-aos-delay="100">
+                Skincare dengan bahan tropical alami • Aman untuk kulit sensitif • Hasil terbukti
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="zoom-in">
+                <a href="#profil"
+                    class="tropical-gradient text-white hover:opacity-90 px-8 py-4 rounded-full text-lg font-semibold transition pulse-glow">
+                    <i class="fas fa-leaf mr-2"></i> Jelajahi Produk
+                </a>
+                <a href="#ringkasan"
+                    class="bg-white/70 backdrop-blur-sm hover:bg-white/90 text-gray-700 px-8 py-4 rounded-full text-lg font-semibold transition border border-emerald-200">
+                    <i class="fas fa-heart mr-2 text-pink-400"></i> Kenali Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- KEUNGGULAN -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Mengapa Memilih GlowCare?</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center p-6 card-hover bg-gradient-to-b from-emerald-50 to-white rounded-2xl"
+                    data-aos="zoom-in">
+                    <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-seedling text-emerald-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">100% Natural</h3>
+                    <p class="text-gray-600 text-sm">Bahan-bahan alami dari alam Indonesia</p>
+                </div>
+                <div class="text-center p-6 card-hover bg-gradient-to-b from-pink-50 to-white rounded-2xl"
+                    data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-pink-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Khusus Wanita</h3>
+                    <p class="text-gray-600 text-sm">Diformulasikan untuk kulit wanita Indonesia</p>
+                </div>
+                <div class="text-center p-6 card-hover bg-gradient-to-b from-teal-50 to-white rounded-2xl"
+                    data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-teal-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">BPOM Certified</h3>
+                    <p class="text-gray-600 text-sm">Terjamin aman dan teruji klinis</p>
+                </div>
+                <div class="text-center p-6 card-hover bg-gradient-to-b from-yellow-50 to-white rounded-2xl"
+                    data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sun text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Tropical Fresh</h3>
+                    <p class="text-gray-600 text-sm">Kesegaran tropical di setiap produk</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RINGKASAN -->
+    <section class="py-16 leaf-pattern" id="ringkasan">
+        <div class="max-w-4xl mx-auto px-6 text-center" data-aos="zoom-in">
+            <div class="mb-8">
+                <span class="text-6xl">🌺</span>
+            </div>
+            <h2 class="text-3xl font-bold mb-4">Tentang GlowCare</h2>
+            <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                Bingung pilih skincare yang cocok buat jenis kulitmu?
+                Tenang, <strong>GlowCare</strong> punya solusinya! Kami menyediakan
+                berbagai pilihan produk skincare dengan bahan-bahan alami tropical
+                yang sudah pasti aman dan cocok untuk kulit wanita Indonesia.
+                Dengan sentuhan kesegaran alam tropis, kulit sehatmu adalah prioritas kami.
+            </p>
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="text-center p-6 bg-white rounded-2xl shadow-sm">
+                    <div
+                        class="bg-gradient-to-r from-emerald-400 to-teal-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-flask text-white text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Bahan Pilihan</h4>
+                    <p class="text-gray-600 text-sm">Ekstrak aloe vera, tea tree, vitamin C & E</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-2xl shadow-sm">
+                    <div
+                        class="bg-gradient-to-r from-pink-400 to-rose-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-hand-holding-heart text-white text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Harga Terjangkau</h4>
+                    <p class="text-gray-600 text-sm">Mulai dari Rp 50.000</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-2xl shadow-sm">
+                    <div
+                        class="bg-gradient-to-r from-orange-400 to-yellow-400 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-award text-white text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold mb-2">Hasil Terbukti</h4>
+                    <p class="text-gray-600 text-sm">Testimoni 10.000+ pelanggan puas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFIL BISNIS -->
+    <section id="profil" class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+            <div data-aos="fade-right">
+                <h2 class="text-3xl font-bold mb-6">Profil Bisnis</h2>
+                <div class="space-y-4">
+                    <div
+                        class="flex items-start space-x-4 p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg hover:from-emerald-100 hover:to-teal-100 transition-colors">
+                        <i class="fas fa-spa text-emerald-500 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-lg">Nama Usaha</h4>
+                            <p class="text-gray-600">GlowCare Skincare</p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-start space-x-4 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-lg hover:from-pink-100 hover:to-rose-100 transition-colors">
+                        <i class="fas fa-female text-pink-500 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-lg">Fokus Bisnis</h4>
+                            <p class="text-gray-600">Skincare khusus wanita dengan bahan tropical alami</p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-start space-x-4 p-4 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-lg hover:from-teal-100 hover:to-cyan-100 transition-colors">
+                        <i class="fas fa-map-marker-alt text-teal-500 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-lg">Lokasi</h4>
+                            <p class="text-gray-600">Tersedia online & offline di seluruh Indonesia</p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex items-start space-x-4 p-4 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg hover:from-orange-100 hover:to-yellow-100 transition-colors">
+                        <i class="fas fa-clock text-orange-500 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold text-lg">Jam Operasional</h4>
+                            <p class="text-gray-600">Setiap hari 09.00 – 21.00 WIB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-aos="fade-left" class="relative">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-2xl transform rotate-3">
+                </div>
+                <div
+                    class="bg-gradient-to-br from-pink-100 via-white to-emerald-100 rounded-2xl shadow-lg relative z-10 p-8 text-center">
+                    <span class="text-8xl mb-4 block">🧴</span>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Natural Beauty</h3>
+                    <p class="text-gray-600">Kecantikan alami dari alam tropis Indonesia</p>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <span class="text-4xl">🌿</span>
+                        <span class="text-4xl">🌸</span>
+                        <span class="text-4xl">🍃</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUK UNGGULAN -->
+    <section class="py-16 bg-gradient-to-b from-emerald-50 to-white" id="produk">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Produk Unggulan</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm card-hover group" data-aos="flip-left">
+                    <div
+                        class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                        <img src="images/skintific-cleanser.png" alt="Skintific Cleanser"
+                            class="w-20 h-20 object-contain">
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Skintific Cleanser</h3>
+                    <p class="text-gray-600 text-sm mb-3">Pembersih wajah dengan ekstrak kelapa muda & aloe vera</p>
+                    <p class="text-emerald-600 font-bold">Rp 80.000</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm card-hover group" data-aos="flip-left"
+                    data-aos-delay="100">
+                    <div
+                        class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-pink-100 to-pink-200 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                        <img src="wardah-serum.png" alt="Wardah Serum" class="w-20 h-20 object-contain">
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Wardah Serum</h3>
+                    <p class="text-gray-600 text-sm mb-3">Serum anti-aging dengan bunga kembang sepatu tropical</p>
+                    <p class="text-emerald-600 font-bold">Rp 65.000</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm card-hover group" data-aos="flip-left"
+                    data-aos-delay="200">
+                    <div
+                        class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-yellow-100 to-orange-200 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                        <img src="gloow-be-sunscreen.png" alt="Gloow & Be Sunscreen" class="w-20 h-20 object-contain">
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Gloow & Be Sunscreen</h3>
+                    <p class="text-gray-600 text-sm mb-3">Sunscreen SPF 50 dengan ekstrak mangga segar</p>
+                    <p class="text-emerald-600 font-bold">Rp 50.000</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm card-hover group" data-aos="flip-left"
+                    data-aos-delay="300">
+                    <div
+                        class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-teal-100 to-emerald-200 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                        <img src="bioaqua-mask.png" alt="BIOAQUA Masker Muka" class="w-20 h-20 object-contain">
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">BIOAQUA Masker Muka</h3>
+                    <p class="text-gray-600 text-sm mb-3">Masker wajah dengan ekstrak alami untuk kulit glowing</p>
+                    <p class="text-emerald-600 font-bold">Rp 13.000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANALISIS PASAR -->
+    <section class="tropical-gradient text-white py-16" id="pasar">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Mengapa Skincare Kami?</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl card-hover group" data-aos="flip-left">
+                    <div
+                        class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-female text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Target Pasar</h3>
+                    <p class="text-white/80">Wanita usia 18-45 tahun yang peduli kecantikan alami</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl card-hover group" data-aos="flip-left"
+                    data-aos-delay="100">
+                    <div
+                        class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Trend Naik</h3>
+                    <p class="text-white/80">Pertumbuhan pasar skincare natural 25% per tahun</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl card-hover group" data-aos="flip-left"
+                    data-aos-delay="200">
+                    <div
+                        class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-hand-holding-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Ramah Lingkungan</h3>
+                    <p class="text-white/80">Packaging eco-friendly & cruelty-free</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STRATEGI -->
+    <section class="py-16" id="pemasaran">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Layanan Kami</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover group text-center" data-aos="zoom-in">
+                    <div
+                        class="bg-gradient-to-r from-pink-400 to-rose-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-spa text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Konsultasi Gratis</h3>
+                    <p class="text-gray-600 text-sm">Konsultasi skincare dengan beauty advisor</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover group text-center" data-aos="zoom-in"
+                    data-aos-delay="100">
+                    <div
+                        class="bg-gradient-to-r from-emerald-400 to-teal-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shipping-fast text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Free Ongkir</h3>
+                    <p class="text-gray-600 text-sm">Gratis ongkir untuk pembelian minimal Rp 200.000</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover group text-center" data-aos="zoom-in"
+                    data-aos-delay="200">
+                    <div
+                        class="bg-gradient-to-r from-purple-400 to-indigo-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-gift text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Member Rewards</h3>
+                    <p class="text-gray-600 text-sm">Poin rewards & diskon eksklusif member</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm card-hover group text-center" data-aos="zoom-in"
+                    data-aos-delay="300">
+                    <div
+                        class="bg-gradient-to-r from-orange-400 to-amber-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-undo text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Garansi 100%</h3>
+                    <p class="text-gray-600 text-sm">Garansi uang kembali jika tidak puas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONI -->
+    <section class="py-16 bg-gradient-to-b from-pink-50 to-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8 text-center" data-aos="fade-up">Apa Kata Mereka?</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-pink-200 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-pink-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Sari Dewi</h4>
+                            <div class="text-yellow-400 text-sm">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Kulitku jadi lebih cerah dan segar! Suka banget sama aroma
+                        tropicalnya 🌸"</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-emerald-200 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-emerald-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Anisa Putri</h4>
+                            <div class="text-yellow-400 text-sm">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Akhirnya nemu skincare yang cocok! Jerawatku berkurang drastis
+                        dalam 2 minggu 💚"</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-200 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-user text-yellow-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Rina Amelia</h4>
+                            <div class="text-yellow-400 text-sm">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Harganya terjangkau tapi kualitasnya premium. Recommended banget!
+                        ✨"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12" id="kontak">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-spa text-emerald-400 text-2xl"></i>
+                        <span class="font-bold text-xl" style="font-family: 'Playfair Display', serif;">GlowCare</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Skincare alami dengan sentuhan tropical untuk kecantikan wanita Indonesia.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/glowcare_skincare1?igsh=MWd2OXZ6dDBpb3ZrNQ==" target="_blank"
+                            class="text-gray-400 hover:text-pink-400 transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="https://wa.me/6281214451911" target="_blank"
+                            class="text-gray-400 hover:text-green-400 transition-colors">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@glowcare.skincare?_r=1&_t=ZS-93ZmbsjQ2Qz" target="_blank"
+                            class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-tiktok text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Link Cepat</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#ringkasan" class="text-gray-400 hover:text-emerald-400 transition-colors">Tentang
+                                Kami</a></li>
+                        <li><a href="#profil" class="text-gray-400 hover:text-emerald-400 transition-colors">Profil
+                                Bisnis</a></li>
+                        <li><a href="#produk" class="text-gray-400 hover:text-emerald-400 transition-colors">Produk</a>
+                        </li>
+                        <li><a href="#pemasaran"
+                                class="text-gray-400 hover:text-emerald-400 transition-colors">Layanan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Hubungi Kami</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-emerald-400"></i>
+                            <span class="text-gray-400">+6281214451911</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-emerald-400"></i>
+                            <span class="text-gray-400">nabilasyopian6@gmail.com</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-map-marker-alt text-emerald-400"></i>
+                            <span class="text-gray-400">Jl. Tropical Beauty No. 88, Jakarta</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">© 2026 GlowCare Skincare | Kecantikan Alami Wanita Indonesia 🌺</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" title="Kembali ke atas">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Hide loading screen after page is fully loaded
+        window.addEventListener('load', () => {
+            // Give a minimum 2 seconds to show the cute animation
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.classList.add('hidden');
+
+                // Remove from DOM after transition
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+
+        // Interactive button animations
+        const buttons = document.querySelectorAll('button:not(#backToTop), a');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'scale(1.05)';
+            });
+
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+</body>
+
+</html>
